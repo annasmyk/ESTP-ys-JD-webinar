@@ -1,0 +1,518 @@
+---
+title: "Seasonal Adjustment in R"
+subtitle: "Using JDemetra+ X13-Arima"
+author: "Anna Smyk"
+---
+
+
+### Loading packages
+
+```{r}
+#| label: loading-rjdverse
+#| echo: true
+#| eval: true
+
+library("rjd3toolkit")
+library("rjd3x13")
+library("rjd3tramoseats")
+library("ggdemetra3")
+```
+
+### Importing data
+
+Here we import the data from the French Industrial Production Index (Ipi):
+
+```{r}
+#| label: import-data-quarto
+#| echo: true
+#| eval: true
+
+library("readr")
+library("dplyr")
+
+ipi <- read.csv("./Data/IPI_nace4.csv", sep = ";") |>
+    mutate(date = as.Date(date, format = "%d/%m/%Y"),
+           across(!date, as.numeric))
+y_raw <- ts(data = ipi[, "RF3030"], frequency = 12, start = c(1990, 1))
+```
+
+We create a ts object with one of the series:
+
+
+## Quick launch with default specifications 
+
+In this section, we will use the packages **{rjd3x13}** (and **{rjd3tramoseats}**..)
+
+```{r}
+#| label: loading-sa-pkg
+#| echo: true
+#| eval: true
+
+library("rjd3x13")
+library("rjd3tramoseats")
+```
+
+
+### Different processing {.allowframebreaks} 
+
+Running a full Seasonal Adjustment processing
+
+```{r}
+#| label: sa-with-rjd3
+#| echo: true
+#| eval: true
+
+# X13
+sa_x13_v3 <- rjd3x13::x13(y_raw, spec = "RSA5")
+
+# Tramo seats
+sa_ts_v3 <- rjd3tramoseats::tramoseats(y_raw, spec = "RSAfull")
+```
+
+Running only pre-adjustment
+
+```{r}
+#| label: sa-with-rjd3x13
+#| echo: true
+#| eval: true
+
+# X13
+sa_regarima_v3 <- rjd3x13::regarima(y_raw, spec = "RG5c")
+
+# Tramo seats
+sa_tramo_v3 <- rjd3tramoseats::tramo(y_raw, spec = "TRfull")
+
+# "fast_XXX" versions...(just results, cf output structure)
+```
+
+Running only decomposition
+
+```{r}
+#| label: x11-with-rjd3x13
+#| echo: true
+#| eval: true
+
+# X11 is a specific function
+x11_v3 <- rjd3x13::x11(y_raw)
+```
+
+
+## Retrieving output and data visualization
+
+
+### "Model_sa" object structure {.allowframebreaks} 
+
+Results vs specification...and then by domain
+
+\footnotesize
+
+```{r}
+#| label: x13-with-rjd3x13
+#| echo: true
+#| eval: true
+
+# Model_sa = sa_x13_v3
+sa_x13_v3 <- rjd3x13::x13(y_raw, spec = "RSA5")
+```
+
+```{r}
+#| label: se-balader-dans-x13
+#| echo: true
+#| eval: false
+
+sa_x13_v3$result
+sa_x13_v3$estimation_spec
+sa_x13_v3$result_spec
+sa_x13_v3$user_defined
+```
+
+
+### Retrieve output series 
+
+Input and output series are TS objects in R
+
+- final series
+
+\footnotesize
+
+```{r}
+#| label: final-d11
+#| echo: true
+#| eval: false
+
+# final seasonally adjusted series
+sa_x13_v3$result$final$d11final
+```
+
+```{r}
+#| label: final-d11-display
+#| echo: false
+#| eval: true
+
+# final seasonally adjusted series
+window(sa_x13_v3$result$final$d11final, start = 2015)
+```
+
+
+### Series from decomposition
+
+Check output names:
+
+\footnotesize
+
+```{r}
+#| label: d5-rjd3x13
+#| echo: true
+#| eval: false
+
+# tables from D1 to D13
+sa_x13_v3$result$decomposition$d5
+```
+
+```{r}
+#| label: d5-rjd3x13-display
+#| echo: false
+#| eval: true
+
+# tables from D1 to D13
+window(sa_x13_v3$result$decomposition$d5, start = 2015)
+```
+
+
+### Retrieving Diagnostics
+
+Just fetch the needed objects in the relevant part of the output structure or print the whole "model"
+
+```{r}
+#| label: diag-rjd3x13
+#| echo: true
+#| eval: true
+
+sa_x13_v3$result$diagnostics$td.ftest.i
+```
+
+What is missing (series or diagnostics) can be retrieved adding user-defined output in the options 
+
+
+### Retrieving user defined-output {.allowframebreaks}
+
+First define the vector of objects you wish to add
+
+Lists of available diagnostics or series 
+
+```{r}
+#| label: ud-diagnostics
+#| echo: true
+#| eval: false
+
+rjd3x13::userdefined_variables_x13("regarima") # restriction
+rjd3x13::userdefined_variables_x13()
+
+rjd3tramoseats::userdefined_variables_tramoseats("tramo") # restriction
+rjd3tramoseats::userdefined_variables_tramoseats("tramoseats")
+```
+
+Select the objects and customize estimation function
+
+```{r}
+#| label: ud-output
+#| echo: true
+#| eval: true
+
+ud <- rjd3x13::userdefined_variables_x13()[15:17] # b series
+ud
+sa_x13_v3_ud <- rjd3x13::x13(y_raw, "RSA5c", userdefined = ud)
+
+# Retrieve the object
+sa_x13_v3_ud$user_defined$cal
+```
+
+```{r}
+#| label: ud-output-display
+#| echo: true
+#| eval: false
+
+# Get all output
+sa_x13_v3_ud$user_defined # remainder of the names
+```
+
+
+### Plots and data visualisation {.allowframebreaks} 
+
+Examples
+
+- Final + "autoplot" layout 
+- Regarima not available (yet ?) !!!
+- SI ratios (ggplot layout)
+
+```{r}
+#| label: plot-si-ratio
+#| echo: true
+#| eval: true
+#| fig-width: 9
+#| fig-height: 4
+#| fig-dpi: 500
+
+library("ggdemetra3")
+siratioplot(sa_x13_v3)
+```
+
+```{r}
+#| label: autoplot
+#| echo: true
+#| eval: true
+#| fig-width: 9
+#| fig-height: 4
+#| fig-dpi: 500
+
+library("ggplot2")
+autoplot(sa_x13_v3)
+```
+
+
+## Customizing specifications
+
+
+### Customising specifications: general steps 
+
+To customise a specification:
+
+- Start with a valid specification, usually one of the default specs (equivalent to cloning a spec in GUI)
+- Create a new specification
+- Apply the new specification to raw series 
+
+
+### Customising specifications: local functions 
+
+\small
+
+Use of specific `set_` functions
+
+- For the **pre-processing** step (functions defined in **{rjd3toolkit}**):
+
+`set_arima()`, `set_automodel()`, `set_basic()`, `set_easter()`, `set_estimate()`, `set_outlier()`, `set_tradingdays()`, `set_transform()`, `add_outlier()` and `remove_outlier()`, `add_ramp()` and `remove_ramp()`, `add_usrdefvar()`
+
+- For the decomposition step with **X11** (function defined in **{rjd3x13}**):
+`set_x11()`
+
+- For the decomposition step with **Tramo-Seats** (function defined in **{rjd3tramoseats}**):
+`set_seats()`
+
+- For the **benchmarking** step (function defined in **{rjd3toolkit}**):
+`set_benchmarking()`
+
+
+### Simple examples {.allowframebreaks}
+
+```{r}
+#| label: custom-spec-default
+#| echo: true
+#| eval: true
+
+# start with default spec
+spec_1 <- spec_x13("RSA3")
+# or start with existing spec (no extraction function needed)
+# spec_1 <- sa_x13_v3_UD$estimation_spec
+```
+
+```{r}
+#| label: custom-spec-out
+#| echo: true
+#| eval: true
+# set a new spec
+## add outliers
+spec_2 <- rjd3toolkit::add_outlier(spec_1,
+    type = "AO", c("2015-01-01", "2010-01-01")
+)
+```
+
+```{r}
+#| label: custom-spec-td
+#| echo: true
+#| eval: true
+## set trading days
+spec_3 <- rjd3toolkit::set_tradingdays(spec_2,
+    option = "workingdays"
+) # JD+ regressors
+```
+
+```{r}
+#| label: custom-spec-x11
+#| echo: true
+#| eval: true
+# set x11 options
+spec_4 <- set_x11(spec_3, henderson.filter = 13)
+# apply with `fast.x13` (results only)
+fast_x13(y_raw, spec_4)
+```
+
+
+### Adding user-defined calendar or other regressors
+
+When adding regressors which are not predefined (like outliers or ramps): 
+
+- `rjd3toolkit::set_tradingdays()`  to be used when allocating a regressor to the **calendar** component
+- `rjd3toolkit::add_usrdefvar()` is used for any other component
+
+
+### Step 1: Creating regressors (1/2)
+
+\small
+
+```{r}
+#| label: creating-french-calendar
+#| echo: true
+#| eval: true
+
+# create national (or other) calendar if needed
+french_calendar <- national_calendar(days = list(
+    fixed_day(7, 14), # Bastille Day
+    fixed_day(5, 8, validity = list(start = "1982-05-08")), # End of 2nd WW
+    special_day("NEWYEAR"),
+    special_day("CHRISTMAS"),
+    special_day("MAYDAY"),
+    special_day("EASTERMONDAY"),
+    special_day("ASCENSION"),
+    special_day("WHITMONDAY"),
+    special_day("ASSUMPTION"),
+    special_day("ALLSAINTSDAY"),
+    special_day("ARMISTICE")
+))
+```
+
+
+### Step 1: Creating regressors (2/2)
+
+\footnotesize
+
+```{r}
+#| label: creating-calendar-regressors
+#| echo: true
+#| eval: true
+
+# create set of 6 regressors every day is different, contrast with Sunday, based on french national calendar
+regs_td <- rjd3toolkit::calendar_td(
+    calendar = french_calendar,
+    # formats the regressor like your raw series (length, frequency..)
+    s = y_raw,
+    groups = c(1, 2, 3, 4, 5, 6, 0),
+    contrasts = TRUE
+)
+
+# create an intervention variable (to be allocated to "trend")
+iv1 <- intervention_variable(
+    s = y_raw,
+    starts = "2015-01-01",
+    ends = "2015-12-01"
+)
+```
+
+Regressors can be any TS object
+
+
+### Step 2: Creating a modelling context {.allowframebreaks}
+
+\small
+
+Modelling context is necessary for any external regressor (new v3 set up)
+
+```{r}
+#| label: create-modeling-context
+#| echo: true
+#| eval: true
+
+# Gather regressors into a list
+my_regressors <- list(
+    Monday = regs_td[, 1],
+    Tuesday = regs_td[, 2],
+    Wednesday = regs_td[, 3],
+    Thursday = regs_td[, 4],
+    Friday = regs_td[, 5],
+    Saturday = regs_td[, 6],
+    reg1 = iv1
+)
+```
+
+```{r}
+#| label: create-modeling-context-display
+#| echo: true
+#| eval: true
+
+# create modelling context
+my_context <- modelling_context(variables = my_regressors)
+# check variables present in modelling context
+rjd3toolkit::.r2jd_modellingcontext(my_context)$getTsVariableDictionary()
+```
+
+
+### Step 3: Adding regressors to specification (calendar) 
+
+```{r}
+#| label: add-regressors-to-spec
+#| echo: true
+#| eval: true
+
+# Add calendar regressors to spec
+x13_spec <- rjd3x13::x13_spec("rsa3")
+x13_spec_user_defined <- rjd3toolkit::set_tradingdays(
+    x = x13_spec,
+    option = "UserDefined",
+    uservariable = c(
+        "r.Monday", "r.Tuesday", "r.Wednesday",
+        "r.Thursday", "r.Friday", "r.Saturday"
+    ),
+    test = "None"
+)
+```
+
+
+### Step 3: Adding regressors to specification (trend) 
+
+```{r}
+#| label: add-trend-to-spec
+#| echo: true
+#| eval: true
+
+# Add intervention variable to spec, choosing the component to allocate the effects to TREND
+x13_spec_user_defined <- add_usrdefvar(
+    x = x13_spec_user_defined,
+    group = "r",
+    name = "reg1",
+    label = "iv1",
+    regeffect = "Trend"
+)
+```
+
+```{r}
+#| label: retrieve-ud-var
+#| echo: true
+#| eval: false
+
+x13_spec_user_defined$regarima$regression$users
+```
+
+
+### Step 4: Estimating with context 
+
+Applying full user-defined specification 
+
+```{r}
+#| label: estimation-with-context
+#| echo: true
+#| eval: true
+
+sa_x13_ud <- rjd3x13::x13(y_raw, x13_spec_user_defined,
+                          context = my_context)
+sa_x13_ud$result$preprocessing
+```
+
+```{r}
+#| label: retrieve-estimation-with-context
+#| echo: true
+#| eval: false
+
+sa_x13_ud$result$preprocessing
+```
+
+The process would be identical using `rjd3tramoseats::tramoseats()`
+

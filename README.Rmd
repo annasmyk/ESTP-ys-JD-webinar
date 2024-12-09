@@ -90,7 +90,7 @@ install.packages("rjd3tramoseats", repos = c("https://rjdverse.r-universe.dev", 
 install.packages("rjwsacruncher")
 ```
 
-## JDemetra + Poster 
+## JDemetra+ Poster 
 
 We will be exploring a small part !
 
