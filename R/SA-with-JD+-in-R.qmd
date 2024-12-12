@@ -30,7 +30,7 @@ Here we import the data from the French Industrial Production Index (Ipi):
 library("readr")
 library("dplyr")
 
-ipi <- read.csv("./Data/IPI_nace4.csv", sep = ";") |>
+ipi <- read.csv("../Data/IPI_nace4.csv", sep = ";") |>
     mutate(date = as.Date(date, format = "%d/%m/%Y"),
            across(!date, as.numeric))
 y_raw <- ts(data = ipi[, "RF3030"], frequency = 12, start = c(1990, 1))
@@ -116,7 +116,7 @@ sa_x13_v3 <- rjd3x13::x13(y_raw, spec = "RSA5")
 ```
 
 ```{r}
-#| label: se-balader-dans-x13
+#| label: navigate-in-x13
 #| echo: true
 #| eval: false
 

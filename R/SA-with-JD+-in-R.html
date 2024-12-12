@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Anna Smyk">
+
+<title>Seasonal Adjustment in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="SA-with-JD+-in-R_files/libs/clipboard/clipboard.min.js"></script>
+<script src="SA-with-JD+-in-R_files/libs/quarto-html/quarto.js"></script>
+<script src="SA-with-JD+-in-R_files/libs/quarto-html/popper.min.js"></script>
+<script src="SA-with-JD+-in-R_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="SA-with-JD+-in-R_files/libs/quarto-html/anchor.min.js"></script>
+<link href="SA-with-JD+-in-R_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="SA-with-JD+-in-R_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="SA-with-JD+-in-R_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="SA-with-JD+-in-R_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="SA-with-JD+-in-R_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Seasonal Adjustment in R</h1>
+<p class="subtitle lead">Using JDemetra+ X13-Arima</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Anna Smyk </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="loading-packages" class="level3">
+<h3 class="anchored" data-anchor-id="loading-packages">Loading packages</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rjd3toolkit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attachement du package : 'rjd3toolkit'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:stats':
+
+    aggregate, mad</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rjd3x13"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attachement du package : 'rjd3x13'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>L'objet suivant est masqué depuis 'package:grDevices':
+
+    x11</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rjd3tramoseats"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggdemetra3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Le chargement a nécessité le package : ggplot2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attachement du package : 'ggdemetra3'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>L'objet suivant est masqué depuis 'package:base':
+
+    raw</code></pre>
+</div>
+</div>
+</section>
+<section id="importing-data" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data">Importing data</h3>
+<p>Here we import the data from the French Industrial Production Index (Ipi):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: le package 'readr' a été compilé avec la version R 4.4.1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: le package 'dplyr' a été compilé avec la version R 4.4.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attachement du package : 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Les objets suivants sont masqués depuis 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ipi <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../Data/IPI_nace4.csv"</span>, <span class="at">sep =</span> <span class="st">";"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(date, <span class="at">format =</span> <span class="st">"%d/%m/%Y"</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">across</span>(<span class="sc">!</span>date, as.numeric))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>y_raw <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="at">data =</span> ipi[, <span class="st">"RF3030"</span>], <span class="at">frequency =</span> <span class="dv">12</span>, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We create a ts object with one of the series:</p>
+</section>
+<section id="quick-launch-with-default-specifications" class="level2">
+<h2 class="anchored" data-anchor-id="quick-launch-with-default-specifications">Quick launch with default specifications</h2>
+<p>In this section, we will use the packages <strong>{rjd3x13}</strong> (and <strong>{rjd3tramoseats}</strong>..)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rjd3x13"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rjd3tramoseats"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="different-processing" class="level3 allowframebreaks">
+<h3 class="allowframebreaks anchored" data-anchor-id="different-processing">Different processing</h3>
+<p>Running a full Seasonal Adjustment processing</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># X13</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>sa_x13_v3 <span class="ot">&lt;-</span> rjd3x13<span class="sc">::</span><span class="fu">x13</span>(y_raw, <span class="at">spec =</span> <span class="st">"RSA5"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Tramo seats</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>sa_ts_v3 <span class="ot">&lt;-</span> rjd3tramoseats<span class="sc">::</span><span class="fu">tramoseats</span>(y_raw, <span class="at">spec =</span> <span class="st">"RSAfull"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Running only pre-adjustment</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># X13</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sa_regarima_v3 <span class="ot">&lt;-</span> rjd3x13<span class="sc">::</span><span class="fu">regarima</span>(y_raw, <span class="at">spec =</span> <span class="st">"RG5c"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Tramo seats</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>sa_tramo_v3 <span class="ot">&lt;-</span> rjd3tramoseats<span class="sc">::</span><span class="fu">tramo</span>(y_raw, <span class="at">spec =</span> <span class="st">"TRfull"</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># "fast_XXX" versions...(just results, cf output structure)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Running only decomposition</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># X11 is a specific function</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x11_v3 <span class="ot">&lt;-</span> rjd3x13<span class="sc">::</span><span class="fu">x11</span>(y_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="retrieving-output-and-data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="retrieving-output-and-data-visualization">Retrieving output and data visualization</h2>
+<section id="model_sa-object-structure" class="level3 allowframebreaks">
+<h3 class="allowframebreaks anchored" data-anchor-id="model_sa-object-structure">“Model_sa” object structure</h3>
+<p>Results vs specification…and then by domain</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model_sa = sa_x13_v3</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sa_x13_v3 <span class="ot">&lt;-</span> rjd3x13<span class="sc">::</span><span class="fu">x13</span>(y_raw, <span class="at">spec =</span> <span class="st">"RSA5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sa_x13_v3<span class="sc">$</span>result</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>sa_x13_v3<span class="sc">$</span>estimation_spec</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>sa_x13_v3<span class="sc">$</span>result_spec</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>sa_x13_v3<span class="sc">$</span>user_defined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="retrieve-output-series" class="level3">
+<h3 class="anchored" data-anchor-id="retrieve-output-series">Retrieve output series</h3>
+<p>Input and output series are TS objects in R</p>
+<ul>
+<li>final series</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># final seasonally adjusted series</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>sa_x13_v3<span class="sc">$</span>result<span class="sc">$</span>final<span class="sc">$</span>d11final</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>           Jan       Feb       Mar       Apr       May       Jun       Jul
+2015 100.85661 107.76841 103.21848  94.07825  96.33846  99.08958  98.04036
+2016 106.78148 102.42877 104.04805 109.98094 107.07113 107.90002  99.00516
+2017 108.62940 104.26657 111.42575 107.27170 111.65944 103.12145 103.98830
+2018 107.63031 104.80374 103.36158 112.74056 110.74114 115.91978 120.21747
+2019 112.25573 117.74573 113.95910 111.98588 114.28993 105.07341 112.51861
+2020 105.54794 107.66479  80.78515  63.83999  58.82967  68.95517  67.56827
+2021  73.84800  62.83905  71.38424  67.46128  71.24192  70.14971  78.10522
+2022  72.73152  72.25331  72.29653  75.15005  72.73275  76.13171  73.16751
+2023  76.54653  83.51608  81.58584  88.03851  82.18970  84.66180  75.88613
+           Aug       Sep       Oct       Nov       Dec
+2015 100.50406 106.21675  99.03366  96.25602  97.27451
+2016  98.99993 102.86452 106.15482 101.46771 102.58564
+2017 121.45475 106.11800 106.75266 117.16392 103.69670
+2018 116.54365 110.81094 109.33802 120.26425 120.99442
+2019 112.61856 114.43218 110.30217 113.69759 101.71949
+2020  60.35262  76.81422  70.14217  81.63548  72.40120
+2021  72.02555  66.95549  79.27900  68.83024  74.90507
+2022  71.09619  74.94718  73.80437  73.42600  88.67888
+2023  90.49501  84.78695                              </code></pre>
+</div>
+</div>
+</section>
+<section id="series-from-decomposition" class="level3">
+<h3 class="anchored" data-anchor-id="series-from-decomposition">Series from decomposition</h3>
+<p>Check output names:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tables from D1 to D13</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>sa_x13_v3<span class="sc">$</span>result<span class="sc">$</span>decomposition<span class="sc">$</span>d5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>           Jan       Feb       Mar       Apr       May       Jun       Jul
+2015 0.9658456 1.0252630 1.1438693 0.9998678 0.9341987 1.1532872 0.8484901
+2016 0.9910674 1.0003766 1.1414874 1.0121528 0.9575822 1.1360498 0.8509723
+2017 0.9966297 0.9808835 1.1280757 1.0015728 0.9708783 1.1056784 0.8735910
+2018 0.9815757 0.9625620 1.0990113 0.9841254 0.9675921 1.0932470 0.9042625
+2019 0.9648857 0.9567625 1.0869458 0.9511762 0.9534931 1.0786619 0.9291282
+2020 0.9511548 0.9460428 1.0783476 0.9397931 0.9391070 1.0978976 0.9420206
+2021 0.9439764 0.9426644 1.0815798 0.9581211 0.9273984 1.1144834 0.9459645
+2022 0.9316876 0.9467797 1.0832439 0.9944149 0.9176293 1.1377682 0.9372308
+2023 0.9211113 0.9579172 1.0889270 1.0225935 0.9114424 1.1435795 0.9280407
+2024 0.9145377 0.9648842 1.0940493 1.0225935 0.9114424 1.1435795 0.9280407
+           Aug       Sep       Oct       Nov       Dec
+2015 0.7239826 1.1013930 1.1236093 1.0404953 0.9250264
+2016 0.7237568 1.0938541 1.1108731 1.0639697 0.9363500
+2017 0.7411881 1.0976201 1.0977324 1.1071563 0.9478761
+2018 0.7561259 1.1045768 1.0862913 1.1329780 0.9776652
+2019 0.7709320 1.1177619 1.0976033 1.1267326 0.9975702
+2020 0.7745709 1.1140050 1.1046656 1.0862612 1.0264772
+2021 0.7821805 1.0866220 1.1133563 1.0427907 1.0478563
+2022 0.7870720 1.0654900 1.1021721 1.0165836 1.0638438
+2023 0.7936710 1.0525924 1.0963961 1.0112226 1.0690172
+2024 0.7936710 1.0525924                              </code></pre>
+</div>
+</div>
+</section>
+<section id="retrieving-diagnostics" class="level3">
+<h3 class="anchored" data-anchor-id="retrieving-diagnostics">Retrieving Diagnostics</h3>
+<p>Just fetch the needed objects in the relevant part of the output structure or print the whole “model”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sa_x13_v3<span class="sc">$</span>result<span class="sc">$</span>diagnostics<span class="sc">$</span>td.ftest.i</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Value: 0.03408445 
+P-Value: 0.9998 </code></pre>
+</div>
+</div>
+<p>What is missing (series or diagnostics) can be retrieved adding user-defined output in the options</p>
+</section>
+<section id="retrieving-user-defined-output" class="level3 allowframebreaks">
+<h3 class="allowframebreaks anchored" data-anchor-id="retrieving-user-defined-output">Retrieving user defined-output</h3>
+<p>First define the vector of objects you wish to add</p>
+<p>Lists of available diagnostics or series</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>rjd3x13<span class="sc">::</span><span class="fu">userdefined_variables_x13</span>(<span class="st">"regarima"</span>) <span class="co"># restriction</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>rjd3x13<span class="sc">::</span><span class="fu">userdefined_variables_x13</span>()</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>rjd3tramoseats<span class="sc">::</span><span class="fu">userdefined_variables_tramoseats</span>(<span class="st">"tramo"</span>) <span class="co"># restriction</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>rjd3tramoseats<span class="sc">::</span><span class="fu">userdefined_variables_tramoseats</span>(<span class="st">"tramoseats"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Select the objects and customize estimation function</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>ud <span class="ot">&lt;-</span> rjd3x13<span class="sc">::</span><span class="fu">userdefined_variables_x13</span>()[<span class="dv">15</span><span class="sc">:</span><span class="dv">17</span>] <span class="co"># b series</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>ud</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "cal"      "cal_b"    "cal_b(?)"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sa_x13_v3_ud <span class="ot">&lt;-</span> rjd3x13<span class="sc">::</span><span class="fu">x13</span>(y_raw, <span class="st">"RSA5c"</span>, <span class="at">userdefined =</span> ud)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve the object</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>sa_x13_v3_ud<span class="sc">$</span>user_defined<span class="sc">$</span>cal</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Jan       Feb       Mar       Apr       May       Jun       Jul
+1990 1.0328902 0.9911504 1.0156541 0.9660446 1.0178904 0.9989863 0.9989800
+1991 1.0178904 0.9911504 0.9418383 1.0595952 1.0236036 0.9489725 1.0328902
+1992 1.0236036 1.0039011 1.0169487 0.9843316 0.9693972 1.0294720 1.0236036
+1993 0.9693972 0.9911504 1.0514689 1.0021897 0.9617249 1.0191943 0.9977083
+1994 0.9617249 0.9911504 1.0005586 1.0162909 0.9989800 1.0020368 0.9693972
+1995 0.9989800 0.9911504 1.0420152 0.9322049 1.0328902 1.0202161 0.9617249
+1996 1.0328902 1.0252354 0.9753873 1.0231498 1.0236036 0.9489725 1.0328902
+1997 1.0236036 0.9911504 0.9343840 1.0490167 0.9977083 0.9834209 1.0178904
+1998 0.9977083 0.9911504 1.0169487 0.9843316 0.9693972 1.0294720 1.0236036
+1999 0.9693972 0.9911504 1.0212431 1.0318516 0.9617249 1.0191943 0.9977083
+2000 0.9617249 1.0427901 1.0420152 0.9322049 1.0328902 1.0202161 0.9617249
+2001 1.0328902 0.9911504 1.0156541 0.9660446 1.0178904 0.9989863 0.9989800
+2002 1.0178904 0.9911504 0.9418383 1.0595952 1.0236036 0.9489725 1.0328902
+2003 1.0236036 0.9911504 0.9790235 1.0011859 0.9977083 0.9834209 1.0178904
+2004 0.9977083 0.9961432 1.0514689 1.0021897 0.9617249 1.0191943 0.9977083
+2005 0.9617249 0.9911504 0.9889529 1.0282174 0.9989800 1.0020368 0.9693972
+2006 0.9989800 0.9911504 1.0420152 0.9322049 1.0328902 1.0202161 0.9617249
+2007 1.0328902 0.9911504 1.0097465 0.9716965 1.0178904 0.9989863 0.9989800
+2008 1.0178904 1.0486431 0.9343840 1.0490167 0.9977083 0.9834209 1.0178904
+2009 0.9977083 0.9911504 1.0169487 0.9843316 0.9693972 1.0294720 1.0236036
+2010 0.9693972 0.9911504 1.0212431 1.0318516 0.9617249 1.0191943 0.9977083
+2011 0.9617249 0.9911504 1.0361992 0.9813350 0.9989800 1.0020368 0.9693972
+2012 0.9989800 1.0299572 1.0097465 0.9716965 1.0178904 0.9989863 0.9989800
+2013 1.0178904 0.9911504 0.9418383 1.0595952 1.0236036 0.9489725 1.0328902
+2014 1.0236036 0.9911504 0.9790235 1.0011859 0.9977083 0.9834209 1.0178904
+2015 0.9977083 0.9911504 0.9934939 1.0075701 0.9693972 1.0294720 1.0236036
+2016 0.9693972 1.0403435 0.9889529 1.0282174 0.9989800 1.0020368 0.9693972
+2017 0.9989800 0.9911504 1.0420152 0.9322049 1.0328902 1.0202161 0.9617249
+2018 1.0328902 0.9911504 0.9693445 1.0121966 1.0178904 0.9989863 0.9989800
+2019 1.0178904 0.9911504 0.9868338 1.0112821 1.0236036 0.9489725 1.0328902
+2020 1.0236036 1.0039011 1.0169487 0.9843316 0.9693972 1.0294720 1.0236036
+2021 0.9693972 0.9911504 1.0212431 1.0318516 0.9617249 1.0191943 0.9977083
+2022 0.9617249 0.9911504 1.0361992 0.9813350 0.9989800 1.0020368 0.9693972
+2023 0.9989800 0.9911504 1.0420152 0.9322049 1.0328902 1.0202161 0.9617249
+           Aug       Sep       Oct       Nov       Dec
+1990 1.0236036 0.9489725 1.0328902 1.0202161 0.9617249
+1991 0.9977083 0.9834209 1.0178904 0.9989863 0.9989800
+1992 0.9617249 1.0191943 0.9977083 0.9834209 1.0178904
+1993 0.9989800 1.0020368 0.9693972 1.0294720 1.0236036
+1994 1.0328902 1.0202161 0.9617249 1.0191943 0.9977083
+1995 1.0178904 0.9989863 0.9989800 1.0020368 0.9693972
+1996 0.9977083 0.9834209 1.0178904 0.9989863 0.9989800
+1997 0.9693972 1.0294720 1.0236036 0.9489725 1.0328902
+1998 0.9617249 1.0191943 0.9977083 0.9834209 1.0178904
+1999 0.9989800 1.0020368 0.9693972 1.0294720 1.0236036
+2000 1.0178904 0.9989863 0.9989800 1.0020368 0.9693972
+2001 1.0236036 0.9489725 1.0328902 1.0202161 0.9617249
+2002 0.9977083 0.9834209 1.0178904 0.9989863 0.9989800
+2003 0.9693972 1.0294720 1.0236036 0.9489725 1.0328902
+2004 0.9989800 1.0020368 0.9693972 1.0294720 1.0236036
+2005 1.0328902 1.0202161 0.9617249 1.0191943 0.9977083
+2006 1.0178904 0.9989863 0.9989800 1.0020368 0.9693972
+2007 1.0236036 0.9489725 1.0328902 1.0202161 0.9617249
+2008 0.9693972 1.0294720 1.0236036 0.9489725 1.0328902
+2009 0.9617249 1.0191943 0.9977083 0.9834209 1.0178904
+2010 0.9989800 1.0020368 0.9693972 1.0294720 1.0236036
+2011 1.0328902 1.0202161 0.9617249 1.0191943 0.9977083
+2012 1.0236036 0.9489725 1.0328902 1.0202161 0.9617249
+2013 0.9977083 0.9834209 1.0178904 0.9989863 0.9989800
+2014 0.9693972 1.0294720 1.0236036 0.9489725 1.0328902
+2015 0.9617249 1.0191943 0.9977083 0.9834209 1.0178904
+2016 1.0328902 1.0202161 0.9617249 1.0191943 0.9977083
+2017 1.0178904 0.9989863 0.9989800 1.0020368 0.9693972
+2018 1.0236036 0.9489725 1.0328902 1.0202161 0.9617249
+2019 0.9977083 0.9834209 1.0178904 0.9989863 0.9989800
+2020 0.9617249 1.0191943 0.9977083 0.9834209 1.0178904
+2021 0.9989800 1.0020368 0.9693972 1.0294720 1.0236036
+2022 1.0328902 1.0202161 0.9617249 1.0191943 0.9977083
+2023 1.0178904 0.9989863                              </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all output</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>sa_x13_v3_ud<span class="sc">$</span>user_defined <span class="co"># remainder of the names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plots-and-data-visualisation" class="level3 allowframebreaks">
+<h3 class="allowframebreaks anchored" data-anchor-id="plots-and-data-visualisation">Plots and data visualisation</h3>
+<p>Examples</p>
+<ul>
+<li>Final + “autoplot” layout</li>
+<li>Regarima not available (yet ?) !!!</li>
+<li>SI ratios (ggplot layout)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggdemetra3"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">siratioplot</span>(sa_x13_v3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="SA-with-JD+-in-R_files/figure-html/plot-si-ratio-1.png" class="img-fluid" width="4500"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(sa_x13_v3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="SA-with-JD+-in-R_files/figure-html/autoplot-1.png" class="img-fluid" width="4500"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="customizing-specifications" class="level2">
+<h2 class="anchored" data-anchor-id="customizing-specifications">Customizing specifications</h2>
+<section id="customising-specifications-general-steps" class="level3">
+<h3 class="anchored" data-anchor-id="customising-specifications-general-steps">Customising specifications: general steps</h3>
+<p>To customise a specification:</p>
+<ul>
+<li>Start with a valid specification, usually one of the default specs (equivalent to cloning a spec in GUI)</li>
+<li>Create a new specification</li>
+<li>Apply the new specification to raw series</li>
+</ul>
+</section>
+<section id="customising-specifications-local-functions" class="level3">
+<h3 class="anchored" data-anchor-id="customising-specifications-local-functions">Customising specifications: local functions</h3>
+<p>Use of specific <code>set_</code> functions</p>
+<ul>
+<li>For the <strong>pre-processing</strong> step (functions defined in <strong>{rjd3toolkit}</strong>):</li>
+</ul>
+<p><code>set_arima()</code>, <code>set_automodel()</code>, <code>set_basic()</code>, <code>set_easter()</code>, <code>set_estimate()</code>, <code>set_outlier()</code>, <code>set_tradingdays()</code>, <code>set_transform()</code>, <code>add_outlier()</code> and <code>remove_outlier()</code>, <code>add_ramp()</code> and <code>remove_ramp()</code>, <code>add_usrdefvar()</code></p>
+<ul>
+<li><p>For the decomposition step with <strong>X11</strong> (function defined in <strong>{rjd3x13}</strong>): <code>set_x11()</code></p></li>
+<li><p>For the decomposition step with <strong>Tramo-Seats</strong> (function defined in <strong>{rjd3tramoseats}</strong>): <code>set_seats()</code></p></li>
+<li><p>For the <strong>benchmarking</strong> step (function defined in <strong>{rjd3toolkit}</strong>): <code>set_benchmarking()</code></p></li>
+</ul>
+</section>
+<section id="simple-examples" class="level3 allowframebreaks">
+<h3 class="allowframebreaks anchored" data-anchor-id="simple-examples">Simple examples</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start with default spec</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>spec_1 <span class="ot">&lt;-</span> <span class="fu">spec_x13</span>(<span class="st">"RSA3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in spec_x13("RSA3"): 'spec_x13' est obsolète.
+Utilisez plutôt ‘x13_spec’.
+Voir help("Deprecated")</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or start with existing spec (no extraction function needed)</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># spec_1 &lt;- sa_x13_v3_UD$estimation_spec</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set a new spec</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="do">## add outliers</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>spec_2 <span class="ot">&lt;-</span> rjd3toolkit<span class="sc">::</span><span class="fu">add_outlier</span>(spec_1,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"AO"</span>, <span class="fu">c</span>(<span class="st">"2015-01-01"</span>, <span class="st">"2010-01-01"</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="do">## set trading days</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>spec_3 <span class="ot">&lt;-</span> rjd3toolkit<span class="sc">::</span><span class="fu">set_tradingdays</span>(spec_2,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"workingdays"</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>) <span class="co"># JD+ regressors</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set x11 options</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>spec_4 <span class="ot">&lt;-</span> <span class="fu">set_x11</span>(spec_3, <span class="at">henderson.filter =</span> <span class="dv">13</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># apply with `fast.x13` (results only)</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">fast_x13</span>(y_raw, spec_4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in fast_x13(y_raw, spec_4): 'fast_x13' est obsolète.
+Utilisez plutôt ‘x13_fast’.
+Voir help("Deprecated")</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>RegARIMA
+Log-transformation: yes 
+SARIMA model: (0,1,1) (0,1,1)
+
+SARIMA coefficients:
+ theta(1) btheta(1) 
+  -0.7518   -0.5869 
+
+Regression model:
+             td AO (2010-01-01) AO (2015-01-01) LS (2020-03-01) 
+       0.009237        0.127505       -0.003300       -0.480344 
+
+For a more detailed output, use the 'summary()' function.
+
+Decomposition
+Monitoring and Quality Assessment Statistics: 
+    M stats
+m1    0.990
+m2    0.826
+m3    1.695
+m4    0.794
+m5    1.768
+m6    0.092
+m7    0.358
+m8    0.848
+m9    0.401
+m10   0.855
+m11   0.720
+q     0.842
+qm2   0.843
+
+Final filters: 
+Seasonal filter:  3
+Trend filter: 13 terms Henderson moving average
+
+Diagnostics
+Relative contribution of the components to the stationary
+portion of the variance in the original series,
+after the removal of the long term trend (in %)
+
+           Component
+ cycle        18.360
+ seasonal     27.363
+ irregular     3.525
+ calendar      1.284
+ others       57.312
+ total       107.846
+
+Residual seasonality tests
+                P.value
+ seas.ftest.i     0.822
+ seas.ftest.sa    0.990
+ seas.qstest.i    1.000
+ seas.qstest.sa   1.000
+ td.ftest.i       0.097
+ td.ftest.sa      0.210
+
+
+Final
+Last values
+           series       sa    trend      seas       irr
+Oct 2022 78.47464 74.94917 73.67092 1.0470382 1.0173508
+Nov 2022 77.53938 72.12701 74.89172 1.0750395 0.9630839
+Dec 2022 93.41653 89.61958 76.70348 1.0423674 1.1683900
+Jan 2023 70.98693 76.87485 78.89613 0.9234090 0.9743805
+Feb 2023 78.60202 83.51024 80.94028 0.9412261 1.0317513
+Mar 2023 92.36738 82.14206 82.65835 1.1244834 0.9937540
+Apr 2023 82.39516 86.67780 83.90017 0.9505913 1.0331063
+May 2023 77.50329 82.50510 84.63553 0.9393758 0.9748282
+Jun 2023 98.20825 85.00288 85.05045 1.1553520 0.9994407
+Jul 2023 67.51649 74.94242 85.48959 0.9009116 0.8766262
+Aug 2023 72.94660 89.63367 86.04690 0.8138304 1.0416839
+Sep 2023 90.38451 84.87867 86.70001 1.0648673 0.9789925</code></pre>
+</div>
+</div>
+</section>
+<section id="adding-user-defined-calendar-or-other-regressors" class="level3">
+<h3 class="anchored" data-anchor-id="adding-user-defined-calendar-or-other-regressors">Adding user-defined calendar or other regressors</h3>
+<p>When adding regressors which are not predefined (like outliers or ramps):</p>
+<ul>
+<li><code>rjd3toolkit::set_tradingdays()</code> to be used when allocating a regressor to the <strong>calendar</strong> component</li>
+<li><code>rjd3toolkit::add_usrdefvar()</code> is used for any other component</li>
+</ul>
+</section>
+<section id="step-1-creating-regressors-12" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-creating-regressors-12">Step 1: Creating regressors (1/2)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create national (or other) calendar if needed</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>french_calendar <span class="ot">&lt;-</span> <span class="fu">national_calendar</span>(<span class="at">days =</span> <span class="fu">list</span>(</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fixed_day</span>(<span class="dv">7</span>, <span class="dv">14</span>), <span class="co"># Bastille Day</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fixed_day</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="at">validity =</span> <span class="fu">list</span>(<span class="at">start =</span> <span class="st">"1982-05-08"</span>)), <span class="co"># End of 2nd WW</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">special_day</span>(<span class="st">"NEWYEAR"</span>),</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">special_day</span>(<span class="st">"CHRISTMAS"</span>),</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">special_day</span>(<span class="st">"MAYDAY"</span>),</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">special_day</span>(<span class="st">"EASTERMONDAY"</span>),</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">special_day</span>(<span class="st">"ASCENSION"</span>),</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">special_day</span>(<span class="st">"WHITMONDAY"</span>),</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">special_day</span>(<span class="st">"ASSUMPTION"</span>),</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">special_day</span>(<span class="st">"ALLSAINTSDAY"</span>),</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">special_day</span>(<span class="st">"ARMISTICE"</span>)</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-1-creating-regressors-22" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-creating-regressors-22">Step 1: Creating regressors (2/2)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create set of 6 regressors every day is different, contrast with Sunday, based on french national calendar</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>regs_td <span class="ot">&lt;-</span> rjd3toolkit<span class="sc">::</span><span class="fu">calendar_td</span>(</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">calendar =</span> french_calendar,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># formats the regressor like your raw series (length, frequency..)</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">s =</span> y_raw,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">groups =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">0</span>),</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">contrasts =</span> <span class="cn">TRUE</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create an intervention variable (to be allocated to "trend")</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>iv1 <span class="ot">&lt;-</span> <span class="fu">intervention_variable</span>(</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">s =</span> y_raw,</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">starts =</span> <span class="st">"2015-01-01"</span>,</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">ends =</span> <span class="st">"2015-12-01"</span></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Regressors can be any TS object</p>
+</section>
+<section id="step-2-creating-a-modelling-context" class="level3 allowframebreaks">
+<h3 class="allowframebreaks anchored" data-anchor-id="step-2-creating-a-modelling-context">Step 2: Creating a modelling context</h3>
+<p>Modelling context is necessary for any external regressor (new v3 set up)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gather regressors into a list</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>my_regressors <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Monday =</span> regs_td[, <span class="dv">1</span>],</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Tuesday =</span> regs_td[, <span class="dv">2</span>],</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Wednesday =</span> regs_td[, <span class="dv">3</span>],</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Thursday =</span> regs_td[, <span class="dv">4</span>],</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Friday =</span> regs_td[, <span class="dv">5</span>],</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Saturday =</span> regs_td[, <span class="dv">6</span>],</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">reg1 =</span> iv1</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create modelling context</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>my_context <span class="ot">&lt;-</span> <span class="fu">modelling_context</span>(<span class="at">variables =</span> my_regressors)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># check variables present in modelling context</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>rjd3toolkit<span class="sc">::</span><span class="fu">.r2jd_modellingcontext</span>(my_context)<span class="sc">$</span><span class="fu">getTsVariableDictionary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Java-Object{[r.Monday, r.Tuesday, r.Wednesday, r.Thursday, r.Friday, r.Saturday, r.reg1]}"</code></pre>
+</div>
+</div>
+</section>
+<section id="step-3-adding-regressors-to-specification-calendar" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-adding-regressors-to-specification-calendar">Step 3: Adding regressors to specification (calendar)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add calendar regressors to spec</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>x13_spec <span class="ot">&lt;-</span> rjd3x13<span class="sc">::</span><span class="fu">x13_spec</span>(<span class="st">"rsa3"</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>x13_spec_user_defined <span class="ot">&lt;-</span> rjd3toolkit<span class="sc">::</span><span class="fu">set_tradingdays</span>(</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> x13_spec,</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"UserDefined"</span>,</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">uservariable =</span> <span class="fu">c</span>(</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"r.Monday"</span>, <span class="st">"r.Tuesday"</span>, <span class="st">"r.Wednesday"</span>,</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"r.Thursday"</span>, <span class="st">"r.Friday"</span>, <span class="st">"r.Saturday"</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">test =</span> <span class="st">"None"</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-3-adding-regressors-to-specification-trend" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-adding-regressors-to-specification-trend">Step 3: Adding regressors to specification (trend)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add intervention variable to spec, choosing the component to allocate the effects to TREND</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>x13_spec_user_defined <span class="ot">&lt;-</span> <span class="fu">add_usrdefvar</span>(</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> x13_spec_user_defined,</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="st">"r"</span>,</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"reg1"</span>,</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"iv1"</span>,</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">regeffect =</span> <span class="st">"Trend"</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>x13_spec_user_defined<span class="sc">$</span>regarima<span class="sc">$</span>regression<span class="sc">$</span>users</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="step-4-estimating-with-context" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-estimating-with-context">Step 4: Estimating with context</h3>
+<p>Applying full user-defined specification</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>sa_x13_ud <span class="ot">&lt;-</span> rjd3x13<span class="sc">::</span><span class="fu">x13</span>(y_raw, x13_spec_user_defined,</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">context =</span> my_context)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>sa_x13_ud<span class="sc">$</span>result<span class="sc">$</span>preprocessing</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Log-transformation: yes 
+SARIMA model: (0,1,1) (0,1,1)
+
+SARIMA coefficients:
+ theta(1) btheta(1) 
+  -0.7453   -0.5742 
+
+Regression model:
+            iv1        r.Monday       r.Tuesday     r.Wednesday      r.Thursday 
+      -0.044283        0.004698        0.015175        0.006322        0.003836 
+       r.Friday      r.Saturday LS (2020-03-01) 
+       0.016037       -0.014621       -0.471895 
+
+For a more detailed output, use the 'summary()' function.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>sa_x13_ud<span class="sc">$</span>result<span class="sc">$</span>preprocessing</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The process would be identical using <code>rjd3tramoseats::tramoseats()</code></p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
