@@ -242,7 +242,6 @@ sa_x13_v3_ud$user_defined # remainder of the names
 Examples
 
 - Final + "autoplot" layout 
-- Regarima not available (yet ?) !!!
 - SI ratios (ggplot layout)
 
 ```{r}
@@ -352,6 +351,7 @@ fast_x13(y_raw, spec_4)
 When adding regressors which are not predefined (like outliers or ramps): 
 
 - `rjd3toolkit::set_tradingdays()`  to be used when allocating a regressor to the **calendar** component
+
 - `rjd3toolkit::add_usrdefvar()` is used for any other component
 
 
