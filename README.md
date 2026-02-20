@@ -3,7 +3,7 @@
 
 # ESTP Webinars for young statisticians : JDemetra+ basics
 
-**Online, April 16th 2026**
+**Online, April 16th 2026, 3pm CET**
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -15,7 +15,7 @@ webinar and additional resources
 
 - `Slides`
 - `Biblio` folder: additional resources
-- a Workbook (to print out)
+- a Workbook (to print out, if no scond screen)
 - `Data` folder: data files (.csv and .xslx) used during the webinar
 - `R` folder containing qmd files with the code
 
