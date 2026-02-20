@@ -3,7 +3,7 @@
 
 # ESTP Webinars for young statisticians : JDemetra+ basics
 
-*Online, December 12th 2024*
+**Online, April 16th 2026, 3pm CET**
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -15,13 +15,13 @@ webinar and additional resources
 
 - `Slides`
 - `Biblio` folder: additional resources
-- a Workbook (to print out)
+- a Workbook (to print out, if no scond screen)
 - `Data` folder: data files (.csv and .xslx) used during the webinar
 - `R` folder containing qmd files with the code
 
 ## To Do: Software installation
 
-### JDemetra+ graphical user interface (GUI) v 3.3.0
+### JDemetra+ graphical user interface (GUI) v 3.6.0 or higher
 
 Head over to [this
 page](https://github.com/jdemetra/jdplus-main/releases)
@@ -33,7 +33,7 @@ the zip corresponding to you OS in the list.
 To start the application, run the file **nbdemetra64.exe** located in
 the following subfolder …-standalone-3.x.y-windows-x86_64
 
-### JDemetra+ Cruncher v3.3.0
+### JDemetra+ Cruncher v3.6.0 or higher
 
 on [this same page](https://github.com/jdemetra/jdplus-main/releases),
 below
@@ -75,14 +75,15 @@ or (better)
 
         - save the file and restart R
 
+  
+
 #### Install the required R packages
 
 ``` r
-# from R Universe
-install.packages("rjd3toolkit", repos = c("https://rjdverse.r-universe.dev", "https://cloud.r-project.org"))
-install.packages("rjd3x13", repos = c("https://rjdverse.r-universe.dev", "https://cloud.r-project.org"))
-install.packages("rjd3tramoseats", repos = c("https://rjdverse.r-universe.dev", "https://cloud.r-project.org"))
 # from CRAN
+install.packages("rjd3toolkit")
+install.packages("rjd3x13")
+install.packages("rjd3tramoseats")
 install.packages("rjwsacruncher")
 ```
 
