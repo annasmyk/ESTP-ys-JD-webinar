@@ -15,13 +15,13 @@ webinar and additional resources
 
 - `Slides`
 - `Biblio` folder: additional resources
-- a Workbook (to print out, if no scond screen)
+- a Workbook (to print out, if no second screen)
 - `Data` folder: data files (.csv and .xslx) used during the webinar
 - `R` folder containing qmd files with the code
 
 ## To Do: Software installation
 
-### JDemetra+ graphical user interface (GUI) v 3.6.0 or higher
+### JDemetra+ graphical user interface (GUI) v 3.7.1 or higher
 
 Head over to [this
 page](https://github.com/jdemetra/jdplus-main/releases)
@@ -33,7 +33,7 @@ the zip corresponding to you OS in the list.
 To start the application, run the file **nbdemetra64.exe** located in
 the following subfolder …-standalone-3.x.y-windows-x86_64
 
-### JDemetra+ Cruncher v3.6.0 or higher
+### JDemetra+ Cruncher v3.7.1 or higher
 
 on [this same page](https://github.com/jdemetra/jdplus-main/releases),
 below
@@ -44,7 +44,7 @@ Windows…
 
 ### R packages
 
-#### First, if needed, get Java version higher than 17
+#### First, if needed, get Java version higher than 21
 
 Easy: Java 21 is embedded in the GUI file you’ve just installed: you
 have it !!
@@ -76,7 +76,6 @@ or (better)
         - save the file and restart R
 
   
-
 #### Install the required R packages
 
 ``` r
