@@ -7,7 +7,7 @@
 RF0610</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0610 (frozen)" source="" identifier="8fd091e6-71e3-4260-ba2d-a149c338c1cf">
+                <ts name="IPI&#10;RF0610 (frozen)" source="" identifier="1e775884-b9b1-44c6-94f9-c905a2a9d3db">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -21,6 +21,88 @@ RF0610</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -349,7 +431,7 @@ RF0610</string>
 RF0620</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0620 (frozen)" source="" identifier="ac765ac4-b984-473d-981c-76f0c02e5be6">
+                <ts name="IPI&#10;RF0620 (frozen)" source="" identifier="626a5191-53f8-4340-87b8-222db2f78f87">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -363,6 +445,88 @@ RF0620</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -1159,7 +1323,7 @@ RF0620</string>
 RF0811</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0811 (frozen)" source="" identifier="f2d40d40-9ad9-4ba8-978b-07b3f1028cbf">
+                <ts name="IPI&#10;RF0811 (frozen)" source="" identifier="5a9d4928-c908-46fb-9598-970b9e29ab87">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -1173,6 +1337,88 @@ RF0811</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -1376,7 +1622,7 @@ RF0811</string>
 RF0812</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0812 (frozen)" source="" identifier="242c969f-c6d0-4076-8a68-bc55a35aa629">
+                <ts name="IPI&#10;RF0812 (frozen)" source="" identifier="4f11e490-6001-46ac-a2df-5fcead7c768a">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -1390,6 +1636,88 @@ RF0812</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -1610,7 +1938,7 @@ RF0812</string>
 RF0893</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0893 (frozen)" source="" identifier="fa741abe-38e7-4175-b9e3-a313115cc7ce">
+                <ts name="IPI&#10;RF0893 (frozen)" source="" identifier="b331bc7c-6775-4bcc-ac23-5f58d880b9f1">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -1624,6 +1952,88 @@ RF0893</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -1711,7 +2121,7 @@ RF0893</string>
 RF0899</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0899 (frozen)" source="" identifier="8d467bc6-7909-4034-a517-29fa30318ab2">
+                <ts name="IPI&#10;RF0899 (frozen)" source="" identifier="c4efb24e-2134-4a83-a05a-e04a18142d49">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -1725,6 +2135,88 @@ RF0899</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -1968,7 +2460,7 @@ RF0899</string>
 RF1011</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1011 (frozen)" source="" identifier="8224ae4c-6d59-4958-9899-7535db5c2386">
+                <ts name="IPI&#10;RF1011 (frozen)" source="" identifier="ac63fc73-5f1a-4f8e-9937-017f0353659d">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -1982,6 +2474,88 @@ RF1011</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -2135,7 +2709,7 @@ RF1011</string>
 RF1012</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1012 (frozen)" source="" identifier="171302a4-9abb-4d37-a3fe-9251e6f2caa8">
+                <ts name="IPI&#10;RF1012 (frozen)" source="" identifier="7cec073d-8ff4-4312-a01f-2d86acc4625c">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -2149,6 +2723,88 @@ RF1012</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -2287,7 +2943,7 @@ RF1012</string>
 RF1013</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1013 (frozen)" source="" identifier="c20f6be0-f3cf-4ecd-9ce5-88ad4dea6f60">
+                <ts name="IPI&#10;RF1013 (frozen)" source="" identifier="09d8137f-cf8b-45fb-af4a-6efdb5dda543">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -2301,6 +2957,88 @@ RF1013</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -2640,7 +3378,7 @@ RF1013</string>
 RF1020</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1020 (frozen)" source="" identifier="745ab961-7af8-4500-a0af-7512ba0aca0b">
+                <ts name="IPI&#10;RF1020 (frozen)" source="" identifier="295cd3f9-b202-4eb3-ad7d-daaa27d71e74">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -2654,6 +3392,88 @@ RF1020</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -2861,7 +3681,7 @@ RF1020</string>
 RF1031</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1031 (frozen)" source="" identifier="05618501-681a-4630-992e-30839b54e5d4">
+                <ts name="IPI&#10;RF1031 (frozen)" source="" identifier="43895268-aa7d-4862-aaba-a8c87a78791b">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -2875,6 +3695,88 @@ RF1031</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -3512,7 +4414,7 @@ RF1031</string>
 RF1032</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1032 (frozen)" source="" identifier="f3e76dba-31a8-477b-b48d-231abde205bb">
+                <ts name="IPI&#10;RF1032 (frozen)" source="" identifier="f93f283a-007b-41f6-888a-77d5c9575a36">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -3526,6 +4428,88 @@ RF1032</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -3659,7 +4643,7 @@ RF1032</string>
 RF1039B</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1039B (frozen)" source="" identifier="bb914fb6-a438-4e45-8227-aefac32cadfe">
+                <ts name="IPI&#10;RF1039B (frozen)" source="" identifier="bf27f0fb-bf91-4865-8418-de97cca7ee56">
                     <freq>12</freq>
                     <firstYear>2007</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -3673,6 +4657,88 @@ RF1039B</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -3854,7 +4920,7 @@ RF1039B</string>
 RF1041</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1041 (frozen)" source="" identifier="18a11d29-d892-4038-b3d2-8433399925b1">
+                <ts name="IPI&#10;RF1041 (frozen)" source="" identifier="44b695ea-1bc8-4242-880f-b8bda4d6bb97">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -3868,6 +4934,88 @@ RF1041</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -4125,7 +5273,7 @@ RF1041</string>
 RF1042</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1042 (frozen)" source="" identifier="da9504fd-91cb-4d22-ac0f-e150b46cfd4a">
+                <ts name="IPI&#10;RF1042 (frozen)" source="" identifier="ea20e786-9257-4bf5-9d1f-bc95fad8b394">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -4139,6 +5287,88 @@ RF1042</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -4330,7 +5560,7 @@ RF1042</string>
 RF1051</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1051 (frozen)" source="" identifier="bd0c78ae-3d8b-4cae-b239-fe31936395c5">
+                <ts name="IPI&#10;RF1051 (frozen)" source="" identifier="03cadb20-8830-47ee-8821-775f3e67df76">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -4344,6 +5574,88 @@ RF1051</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -4489,7 +5801,7 @@ RF1051</string>
 RF1052B</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1052B (frozen)" source="" identifier="e1235c4a-d9f0-4e58-bfd2-e546276c46ae">
+                <ts name="IPI&#10;RF1052B (frozen)" source="" identifier="2734b14d-ee76-4b4a-a4b8-e73576295b9f">
                     <freq>12</freq>
                     <firstYear>2009</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -4503,6 +5815,88 @@ RF1052B</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>
@@ -4599,7 +5993,7 @@ RF1052B</string>
 RF1061</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1061 (frozen)" source="" identifier="70b1a073-3b84-4a47-89bd-857278abf2f0">
+                <ts name="IPI&#10;RF1061 (frozen)" source="" identifier="34bdf6ca-beea-4d59-b3a6-cb34d0bbcf15">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -4613,6 +6007,88 @@ RF1061</string>
             </item>
             <item name="domainspec">
                 <string>spec1</string>
+            </item>
+            <item name="estimationspec">
+                <subset>
+                    <item name="algorithm">
+                        <method version="3.0.0">
+                            <name>x13</name>
+                            <family>Seasonal adjustment</family>
+                        </method>
+                    </item>
+                    <item name="regarima">
+                        <subset>
+                            <item name="algorithm">
+<method version="3.0.0">
+    <name>regarima</name>
+    <family>Modelling</family>
+</method>
+                            </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
+                            <item name="automdl">
+<subset/>
+                            </item>
+                            <item name="outlier">
+<subset>
+    <item name="ao">
+        <double>0.0</double>
+    </item>
+    <item name="ls">
+        <double>0.0</double>
+    </item>
+    <item name="tc">
+        <double>0.0</double>
+    </item>
+</subset>
+                            </item>
+                            <item name="regression">
+<subset>
+    <item name="tradingdays">
+        <subset>
+            <item name="autopval1">
+                <double>0.0</double>
+            </item>
+            <item name="autopval2">
+                <double>0.0</double>
+            </item>
+            <item name="option">
+                <string>TD7</string>
+            </item>
+            <item name="leapyear">
+                <string>LeapYear</string>
+            </item>
+            <item name="test">
+                <string>Remove</string>
+            </item>
+        </subset>
+    </item>
+    <item name="easter">
+        <subset>
+            <item name="type">
+                <string>Easter</string>
+            </item>
+            <item name="param">
+                <integer>8</integer>
+            </item>
+            <item name="test">
+                <string>Add</string>
+            </item>
+        </subset>
+    </item>
+</subset>
+                            </item>
+                        </subset>
+                    </item>
+                </subset>
+            </item>
+            <item name="policy">
+                <string>Complete</string>
             </item>
             <item name="pointspec">
                 <subset>

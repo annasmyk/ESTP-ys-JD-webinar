@@ -4,6 +4,22 @@ subtitle: "Using JDemetra+ X13-Arima"
 author: "Anna Smyk"
 ---
 
+## Set-up
+
+### Installing packages
+
+
+```{r}
+#| label: loading-rjdverse
+#| echo: true
+#| eval: true
+# install.packages("dplyr")
+# install.packages("rjd3toolkit")
+# install.packages("rjd3x13")
+# install.packages("rjd3tramoseats")
+# # install.packages("remotes")
+# remotes::install_github("AQLT/ggdemetra3")
+```
 
 ### Loading packages
 
@@ -11,14 +27,15 @@ author: "Anna Smyk"
 #| label: loading-rjdverse
 #| echo: true
 #| eval: true
-
+library("dplyr")
 library("rjd3toolkit")
 library("rjd3x13")
 library("rjd3tramoseats")
 library("ggdemetra3")
 ```
 
-### Importing data
+
+## Importing data
 
 Here we import the data from the French Industrial Production Index (Ipi):
 
@@ -26,34 +43,17 @@ Here we import the data from the French Industrial Production Index (Ipi):
 #| label: import-data-quarto
 #| echo: true
 #| eval: true
-
-library("readr")
-library("dplyr")
-
 ipi <- read.csv("../Data/IPI_nace4.csv", sep = ";") |>
     mutate(date = as.Date(date, format = "%d/%m/%Y"),
            across(!date, as.numeric))
 y_raw <- ts(data = ipi[, "RF3030"], frequency = 12, start = c(1990, 1))
 ```
 
-We create a ts object with one of the series:
+We created a ts object with one of the series, indispensable to work with JDemetra+ packages
 
+## EStimations
 
-## Quick launch with default specifications 
-
-In this section, we will use the packages **{rjd3x13}** (and **{rjd3tramoseats}**..)
-
-```{r}
-#| label: loading-sa-pkg
-#| echo: true
-#| eval: true
-
-library("rjd3x13")
-library("rjd3tramoseats")
-```
-
-
-### Different processing {.allowframebreaks} 
+### SA process {.allowframebreaks} 
 
 Running a full Seasonal Adjustment processing
 
@@ -69,7 +69,8 @@ sa_x13_v3 <- rjd3x13::x13(y_raw, spec = "RSA5")
 sa_ts_v3 <- rjd3tramoseats::tramoseats(y_raw, spec = "RSAfull")
 ```
 
-Running only pre-adjustment
+
+### Only pre-adjustment
 
 ```{r}
 #| label: sa-with-rjd3x13
@@ -79,13 +80,15 @@ Running only pre-adjustment
 # X13
 sa_regarima_v3 <- rjd3x13::regarima(y_raw, spec = "RG5c")
 
+summary(sa_regarima_v3)
+
 # Tramo seats
 sa_tramo_v3 <- rjd3tramoseats::tramo(y_raw, spec = "TRfull")
 
 # "fast_XXX" versions...(just results, cf output structure)
 ```
 
-Running only decomposition
+### Only decomposition (a priori not advised)
 
 ```{r}
 #| label: x11-with-rjd3x13
@@ -98,7 +101,6 @@ x11_v3 <- rjd3x13::x11(y_raw)
 
 
 ## Retrieving output and data visualization
-
 
 ### "Model_sa" object structure {.allowframebreaks} 
 
@@ -126,12 +128,13 @@ sa_x13_v3$result_spec
 sa_x13_v3$user_defined
 ```
 
-
 ### Retrieve output series 
 
 Input and output series are TS objects in R
 
 - final series
+
+names of output series: see [documentation](https://doc.jdemetra.org/m-x11-decomposition#m-X11-final-output) 
 
 \footnotesize
 
@@ -151,31 +154,6 @@ sa_x13_v3$result$final$d11final
 
 # final seasonally adjusted series
 window(sa_x13_v3$result$final$d11final, start = 2015)
-```
-
-
-### Series from decomposition
-
-Check output names:
-
-\footnotesize
-
-```{r}
-#| label: d5-rjd3x13
-#| echo: true
-#| eval: false
-
-# tables from D1 to D13
-sa_x13_v3$result$decomposition$d5
-```
-
-```{r}
-#| label: d5-rjd3x13-display
-#| echo: false
-#| eval: true
-
-# tables from D1 to D13
-window(sa_x13_v3$result$decomposition$d5, start = 2015)
 ```
 
 
@@ -205,11 +183,14 @@ Lists of available diagnostics or series
 #| echo: true
 #| eval: false
 
-rjd3x13::userdefined_variables_x13("regarima") # restriction
-rjd3x13::userdefined_variables_x13()
+summary(x13_dictionary())
 
-rjd3tramoseats::userdefined_variables_tramoseats("tramo") # restriction
-rjd3tramoseats::userdefined_variables_tramoseats("tramoseats")
+summary(tramoseats_dictionary())
+
+# names in JD+_Output_contents.pdf or...
+
+View(x13_full_dictionary())
+
 ```
 
 Select the objects and customize estimation function
@@ -219,12 +200,16 @@ Select the objects and customize estimation function
 #| echo: true
 #| eval: true
 
-ud <- rjd3x13::userdefined_variables_x13()[15:17] # b series
-ud
-sa_x13_v3_ud <- rjd3x13::x13(y_raw, "RSA5c", userdefined = ud)
+# select user defined output 
+user_defined_output <- x13_dictionary()[c(65, 95, 135)]
+user_defined_output
+
+sa_x13_v3_ud <- rjd3x13::x13(y_raw, "RSA5c", userdefined = user_defined_output)
 
 # Retrieve the object
-sa_x13_v3_ud$user_defined$cal
+# : stored herer, sa_x13_v3_ud$user_defined$
+# for instance 
+sa_x13_v3_ud$user_defined$residuals.kurtosis # list of objects
 ```
 
 ```{r}
@@ -271,7 +256,6 @@ autoplot(sa_x13_v3)
 
 ## Customizing specifications
 
-
 ### Customising specifications: general steps 
 
 To customise a specification:
@@ -309,7 +293,7 @@ Use of specific `set_` functions
 #| eval: true
 
 # start with default spec
-spec_1 <- spec_x13("RSA3")
+spec_1 <- x13_spec("RSA3")
 # or start with existing spec (no extraction function needed)
 # spec_1 <- sa_x13_v3_UD$estimation_spec
 ```
@@ -342,9 +326,9 @@ spec_3 <- rjd3toolkit::set_tradingdays(spec_2,
 # set x11 options
 spec_4 <- set_x11(spec_3, henderson.filter = 13)
 # apply with `fast.x13` (results only)
-fast_x13(y_raw, spec_4)
+x13_fast(y_raw, spec_4)
 ```
-
+<!-- OPTIONAL, More Advanced -->
 
 ### Adding user-defined calendar or other regressors
 

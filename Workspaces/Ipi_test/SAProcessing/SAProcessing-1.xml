@@ -7,7 +7,7 @@
 RF0610</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0610 (frozen)" source="" identifier="1e775884-b9b1-44c6-94f9-c905a2a9d3db">
+                <ts name="IPI&#10;RF0610 (frozen)" source="" identifier="3a7f1771-3fa8-4176-94a3-905b2d5e512a">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -15,7 +15,7 @@ RF0610</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF0610&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -431,7 +431,7 @@ RF0610</string>
 RF0620</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0620 (frozen)" source="" identifier="626a5191-53f8-4340-87b8-222db2f78f87">
+                <ts name="IPI&#10;RF0620 (frozen)" source="" identifier="a534b063-be64-4e14-a639-56888c8bd869">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -439,7 +439,7 @@ RF0620</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF0620&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -1323,7 +1323,7 @@ RF0620</string>
 RF0811</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0811 (frozen)" source="" identifier="5a9d4928-c908-46fb-9598-970b9e29ab87">
+                <ts name="IPI&#10;RF0811 (frozen)" source="" identifier="6f65a1ad-f87f-4dc1-8081-b12b6fb83b28">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -1331,7 +1331,7 @@ RF0811</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF0811&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -1622,7 +1622,7 @@ RF0811</string>
 RF0812</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0812 (frozen)" source="" identifier="4f11e490-6001-46ac-a2df-5fcead7c768a">
+                <ts name="IPI&#10;RF0812 (frozen)" source="" identifier="b0eca7c5-66d6-489e-a0c7-29af7172ab74">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -1630,7 +1630,7 @@ RF0812</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF0812&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -1938,7 +1938,7 @@ RF0812</string>
 RF0893</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0893 (frozen)" source="" identifier="b331bc7c-6775-4bcc-ac23-5f58d880b9f1">
+                <ts name="IPI&#10;RF0893 (frozen)" source="" identifier="48350936-a1b5-47c4-a83b-131263e3e850">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -1946,7 +1946,7 @@ RF0893</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF0893&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -2121,7 +2121,7 @@ RF0893</string>
 RF0899</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF0899 (frozen)" source="" identifier="c4efb24e-2134-4a83-a05a-e04a18142d49">
+                <ts name="IPI&#10;RF0899 (frozen)" source="" identifier="7c76a4b4-b6d6-4d1e-b4de-a7b662849a02">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -2129,7 +2129,7 @@ RF0899</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF0899&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -2460,7 +2460,7 @@ RF0899</string>
 RF1011</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1011 (frozen)" source="" identifier="ac63fc73-5f1a-4f8e-9937-017f0353659d">
+                <ts name="IPI&#10;RF1011 (frozen)" source="" identifier="2289e1c7-dea2-468c-8a18-cbbdd635acf1">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -2468,7 +2468,7 @@ RF1011</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1011&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -2709,7 +2709,7 @@ RF1011</string>
 RF1012</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1012 (frozen)" source="" identifier="7cec073d-8ff4-4312-a01f-2d86acc4625c">
+                <ts name="IPI&#10;RF1012 (frozen)" source="" identifier="6901f258-e404-47a2-ad83-c36c1fca9e97">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -2717,7 +2717,7 @@ RF1012</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1012&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -2943,7 +2943,7 @@ RF1012</string>
 RF1013</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1013 (frozen)" source="" identifier="09d8137f-cf8b-45fb-af4a-6efdb5dda543">
+                <ts name="IPI&#10;RF1013 (frozen)" source="" identifier="836bae9c-c1db-431f-acc5-1860bf8e82ff">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -2951,7 +2951,7 @@ RF1013</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1013&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -3378,7 +3378,7 @@ RF1013</string>
 RF1020</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1020 (frozen)" source="" identifier="295cd3f9-b202-4eb3-ad7d-daaa27d71e74">
+                <ts name="IPI&#10;RF1020 (frozen)" source="" identifier="84759043-0b80-4d0a-bc74-b669af185fdc">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -3386,7 +3386,7 @@ RF1020</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1020&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -3681,7 +3681,7 @@ RF1020</string>
 RF1031</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1031 (frozen)" source="" identifier="43895268-aa7d-4862-aaba-a8c87a78791b">
+                <ts name="IPI&#10;RF1031 (frozen)" source="" identifier="36b48c8b-15a8-48fe-bb2a-8d39430f00e3">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -3689,7 +3689,7 @@ RF1031</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1031&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -4414,7 +4414,7 @@ RF1031</string>
 RF1032</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1032 (frozen)" source="" identifier="f93f283a-007b-41f6-888a-77d5c9575a36">
+                <ts name="IPI&#10;RF1032 (frozen)" source="" identifier="f11f0421-2c97-4a4d-8c1e-99d7783b9c22">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -4422,7 +4422,7 @@ RF1032</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1032&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -4643,7 +4643,7 @@ RF1032</string>
 RF1039B</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1039B (frozen)" source="" identifier="bf27f0fb-bf91-4865-8418-de97cca7ee56">
+                <ts name="IPI&#10;RF1039B (frozen)" source="" identifier="c33b603e-3cb6-4615-8088-a1b9995111e7">
                     <freq>12</freq>
                     <firstYear>2007</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -4651,7 +4651,7 @@ RF1039B</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1039B&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -4920,7 +4920,7 @@ RF1039B</string>
 RF1041</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1041 (frozen)" source="" identifier="44b695ea-1bc8-4242-880f-b8bda4d6bb97">
+                <ts name="IPI&#10;RF1041 (frozen)" source="" identifier="94dbd47d-d48a-45d9-9e39-3189b7fc5125">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -4928,7 +4928,7 @@ RF1041</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1041&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -5273,7 +5273,7 @@ RF1041</string>
 RF1042</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1042 (frozen)" source="" identifier="ea20e786-9257-4bf5-9d1f-bc95fad8b394">
+                <ts name="IPI&#10;RF1042 (frozen)" source="" identifier="5dfa4e87-4f9d-4cd3-99cd-e35b7bb452f2">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -5281,7 +5281,7 @@ RF1042</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1042&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -5560,7 +5560,7 @@ RF1042</string>
 RF1051</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1051 (frozen)" source="" identifier="03cadb20-8830-47ee-8821-775f3e67df76">
+                <ts name="IPI&#10;RF1051 (frozen)" source="" identifier="8e517f63-c696-4dbc-8a44-8eadd48ec694">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -5568,7 +5568,7 @@ RF1051</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1051&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -5801,7 +5801,7 @@ RF1051</string>
 RF1052B</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1052B (frozen)" source="" identifier="2734b14d-ee76-4b4a-a4b8-e73576295b9f">
+                <ts name="IPI&#10;RF1052B (frozen)" source="" identifier="ad69a75b-1bde-44ac-b139-ca95e19d547d">
                     <freq>12</freq>
                     <firstYear>2009</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -5809,7 +5809,7 @@ RF1052B</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1052B&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
@@ -5993,7 +5993,7 @@ RF1052B</string>
 RF1061</string>
             </item>
             <item name="ts">
-                <ts name="IPI&#10;RF1061 (frozen)" source="" identifier="34bdf6ca-beea-4d59-b3a6-cb34d0bbcf15">
+                <ts name="IPI&#10;RF1061 (frozen)" source="" identifier="0225ae4d-6f3f-4e24-b5ba-5ea1047d4650">
                     <freq>12</freq>
                     <firstYear>1990</firstYear>
                     <firstPeriod>1</firstPeriod>
@@ -6001,7 +6001,7 @@ RF1061</string>
                     <metaData>
                         <property name="@source" value="XCLPRVDR"/>
                         <property name="@id" value="demetra://tsprovider/XCLPRVDR/20111201/SERIES?file=C%3A%5CUsers%5CYWYD5I%5CDocuments%5C00_RJD3_Developpement%5CData%5Cipi_nace4_ind.xlsx#seriesName=RF1061&amp;sheetName=IPI"/>
-                        <property name="@timestamp" value="2024-12-12"/>
+                        <property name="@timestamp" value="2026-04-15"/>
                     </metaData>
                 </ts>
             </item>
