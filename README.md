@@ -80,10 +80,13 @@ or (better)
 
 ``` r
 # from CRAN
+install.packages("dplyr")
 install.packages("rjd3toolkit")
 install.packages("rjd3x13")
 install.packages("rjd3tramoseats")
 install.packages("rjwsacruncher")
+install.packages("remotes")
+remotes::install_github("AQLT/ggdemetra3")
 ```
 
 ## JDemetra + Poster
